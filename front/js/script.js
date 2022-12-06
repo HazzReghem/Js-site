@@ -6,10 +6,11 @@ fetch('http://localhost:3000/api/products')
     // Récupérer les données de l'API puis en faire une fonction
     .then(data => {
         displayProducts(data)
+        console.log(data)
 
         // FONCTION DAFFICHAGE DES PRODUITS
         function displayProducts(data) {
-
+            
         // Boucle for pour affichage dynamique
             for (product of data) {
                 let products = document.querySelector('#items').innerHTML +=
