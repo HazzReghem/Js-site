@@ -70,7 +70,7 @@ function addProductToLocalStorage(){
 
         // Sinon (tout est OK) : envoyer les données vers le Local Storage
         } else {
-            alert(`Vous avez ajouté ${quantity.value} ${title.textContent} ${color.value} à votre panier. Cliquez sur "OK" pour consulter votre panier !`)
+            alert(`Vous avez ajouté ${quantity.value} ${title.textContent} ${color.value} à votre panier. Cliquez sur "OK" pour consulter votre panier !`);
             window.location.href = "cart.html";
 
         // Données à enregistrer dans le Local Storage
@@ -88,7 +88,7 @@ function addProductToLocalStorage(){
             let customerCart = JSON.parse(localStorage.getItem("product"));
 
         // Si le panier est vide : on "push" les données customerSelection sous forme de tableau
-            if (customerCart === null) {
+            if (customerCart == null) {
                 customerCart = [];
                 customerCart.push(customerSelection);
                 localStorage.setItem("product", JSON.stringify(customerCart));
@@ -96,7 +96,7 @@ function addProductToLocalStorage(){
         // Si le panier n'est pas vide
             }else {
         // Constante si le produit est déjà dans le panier (trouver par ID  et couleur)
-        const alreadyInCart = customerCart.find(element.id == customerSelection.id && element.color == customerSelection.color);
+        const alreadyInCart = customerCart.find(element.id === customerSelection.id && element.color === customerSelection.color);
 
         // Si produit n'est pas dnas le panier : Push les données
                 if (alreadyInCart == undefined) {
@@ -116,4 +116,7 @@ function addProductToLocalStorage(){
 
 // Appel de la fonction
 addProductToLocalStorage();
+
+// customerCart.forEach((element, key) => {
+    // (element.id === customerSelection.id && element.color == customerSelection.color)
 
