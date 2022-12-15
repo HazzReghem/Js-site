@@ -11,6 +11,13 @@ function displayProductsInCart() {
         alert("Il n'y a aucun article dans votre panier !")
     }else {
         for (i = 0; i < customerCart.length; i++ ) {
+
+          const colorChoice = customerCart[i].color;
+          console.log(colorChoice)
+
+          const quantityChoice = customerCart[i].quantity;
+          console.log(quantityChoice)
+
           fetch(`http://localhost:3000/api/products/${customerCart[i].id}`)
             .then(res => res.json()
                 )
@@ -24,13 +31,13 @@ function displayProductsInCart() {
                   <div class="cart__item__content">
                     <div class="cart__item__content__description">
                       <h2>${data.name}</h2>
-                      <p>${data.color}</p>
+                      <p>${colorChoice}</p>
                       <p>${data.price}€</p>
                     </div>
                     <div class="cart__item__content__settings">
                       <div class="cart__item__content__settings__quantity">
                         <p>Qté : </p>
-                        <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${data.quantity}">
+                        <input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${quantityChoice}">
                       </div>
                       <div class="cart__item__content__settings__delete">
                         <p class="deleteItem">Supprimer</p>
