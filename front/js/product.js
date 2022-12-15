@@ -96,7 +96,7 @@ function addProductToLocalStorage(){
         // Si le panier n'est pas vide
             }else {
         // Constante si le produit est déjà dans le panier (trouver par ID  et couleur)
-        const alreadyInCart = customerCart.find(element.id === customerSelection.id && element.color === customerSelection.color);
+        const alreadyInCart = customerCart.find(element => element.id === customerSelection.id && element.color === customerSelection.color);
 
         // Si produit n'est pas dnas le panier : Push les données
                 if (alreadyInCart == undefined) {
@@ -108,6 +108,7 @@ function addProductToLocalStorage(){
                     let newProductQuantityInCart = parseInt(customerSelection.quantity) + parseInt(productInCart.quantity);
                     productInCart.quantity = newProductQuantityInCart;
                     localStorage.setItem("product", JSON.stringify(customerCart));
+                    console.log(newProductQuantityInCart)
                 }
             }
         }
@@ -118,5 +119,5 @@ function addProductToLocalStorage(){
 addProductToLocalStorage();
 
 // customerCart.forEach((element, key) => {
-    // (element.id === customerSelection.id && element.color == customerSelection.color)
+    // (element.id === customerSelection.id && element.color == customerSelection.color)}
 
