@@ -81,7 +81,6 @@ function addProductToLocalStorage(){
                 color: color.value,
                 quantity: quantity.value,
                 name: title.textContent,
-                price: price.textContent,
             };
 
         // Récupérer donnée du Local Storage
