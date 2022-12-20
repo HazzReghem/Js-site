@@ -1,6 +1,8 @@
 let customerCart = JSON.parse(localStorage.getItem("product"));
 console.log(customerCart);
 
+let totalPrice = [];
+let totalQuantity = [];
 
 // Fonction d'affichage des produits dans le panier
 
@@ -13,10 +15,8 @@ function displayProductsInCart() {
         for (i = 0; i < customerCart.length; i++ ) {
 
           let colorChoice = customerCart[i].color;
-          console.log(colorChoice)
 
           let quantityChoice = customerCart[i].quantity;
-          console.log(quantityChoice)
 
           fetch(`http://localhost:3000/api/products/${customerCart[i].id}`)
             .then(res => res.json()
@@ -52,11 +52,28 @@ function displayProductsInCart() {
               let priceNumber = Number(quantityChoice * data.price);
               console.log(priceNumber)
 
-              // totalQuantity.push(quantityNumber);
-              // totalPrice.push(priceNumber);
+              totalQuantity.push(quantityNumber);
+              console.log(totalQuantity)
 
-              // const total = (accumulator, currentValue) => accumulator + currentValue;
-              // const totalPrice = priceNumber.reduce(total);
+              totalPrice.push(priceNumber);
+              console.log(totalPrice)
+
+              function displayTotals () {
+                const total = (accumulator, currentValue) => accumulator + currentValue;
+            
+                  // Additionner les quantités totales de chaque produit du panier
+                      const realTotalQuantity = totalQuantity.reduce(total, 0);
+                      console.log(realTotalQuantity)
+            
+                  // Additionner les prix totaux de chaque produit du panier      
+                      const realTotalPrice = totalPrice.reduce(total, 0);
+                      console.log(realTotalPrice)
+            
+                      document.querySelector('#totalPrice').innerHTML += `${realTotalPrice}`;
+                      document.querySelector('#totalQuantity').innerHTML += `${realTotalQuantity}`;
+            }
+            
+            displayTotals();
             })
             
             .catch(error => {
@@ -78,8 +95,8 @@ displayProductsInCart();
 //           const realTotalPrice = totalPrice.reduce(total, 0);
 //           console.log(realTotalPrice)
 
-//           document.querySelector('.cart__price').innerHTML +=
-//           `<p>Total (<span id="totalQuantity"><!-- 2 --></span> articles) : <span id="totalPrice">${totalPrice}</span>`
+//           document.querySelector('#totalPrice').innerHTML += `${realTotalPrice}`;
+//           document.querySelector('#totalQuantity').innerHTML += `${realTotalQuantity}`;
 // }
 
 // displayTotals();
