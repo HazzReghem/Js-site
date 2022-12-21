@@ -57,23 +57,6 @@ function displayProductsInCart() {
 
               totalPrice.push(priceNumber);
               console.log(totalPrice)
-
-            //   function displayTotals () {
-            //     const total = (accumulator, currentValue) => accumulator + currentValue;
-            
-            //       // Additionner les quantités totales de chaque produit du panier
-            //           const realTotalQuantity = totalQuantity.reduce(total, 0);
-            //           console.log(realTotalQuantity)
-            
-            //       // Additionner les prix totaux de chaque produit du panier      
-            //           const realTotalPrice = totalPrice.reduce(total, 0);
-            //           console.log(realTotalPrice)
-            
-            //           document.querySelector('#totalPrice').innerHTML += `${realTotalPrice}`;
-            //           document.querySelector('#totalQuantity').innerHTML += `${realTotalQuantity}`;
-            // }
-            
-            // displayTotals();
             })
             
             .catch(error => {
@@ -89,7 +72,7 @@ function displayTotals () {
   if(customerCart === null) {
     alert("Il n'y a aucun article dans votre panier !")
   }else {
-    for (j = 0; j < customerCart.length; j++ ){
+    for (j = 0; j < customerCart.length && j < 1; j++ ){
 
       fetch(`http://localhost:3000/api/products/${customerCart[j].id}`)
         .then(res => res.json ()
