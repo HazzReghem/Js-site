@@ -58,22 +58,22 @@ function displayProductsInCart() {
               totalPrice.push(priceNumber);
               console.log(totalPrice)
 
-              function displayTotals () {
-                const total = (accumulator, currentValue) => accumulator + currentValue;
+            //   function displayTotals () {
+            //     const total = (accumulator, currentValue) => accumulator + currentValue;
             
-                  // Additionner les quantités totales de chaque produit du panier
-                      const realTotalQuantity = totalQuantity.reduce(total, 0);
-                      console.log(realTotalQuantity)
+            //       // Additionner les quantités totales de chaque produit du panier
+            //           const realTotalQuantity = totalQuantity.reduce(total, 0);
+            //           console.log(realTotalQuantity)
             
-                  // Additionner les prix totaux de chaque produit du panier      
-                      const realTotalPrice = totalPrice.reduce(total, 0);
-                      console.log(realTotalPrice)
+            //       // Additionner les prix totaux de chaque produit du panier      
+            //           const realTotalPrice = totalPrice.reduce(total, 0);
+            //           console.log(realTotalPrice)
             
-                      document.querySelector('#totalPrice').innerHTML += `${realTotalPrice}`;
-                      document.querySelector('#totalQuantity').innerHTML += `${realTotalQuantity}`;
-            }
+            //           document.querySelector('#totalPrice').innerHTML += `${realTotalPrice}`;
+            //           document.querySelector('#totalQuantity').innerHTML += `${realTotalQuantity}`;
+            // }
             
-            displayTotals();
+            // displayTotals();
             })
             
             .catch(error => {
@@ -84,19 +84,33 @@ function displayProductsInCart() {
 }
 displayProductsInCart();
 
-// function displayTotals () {
-//     const total = (accumulator, currentValue) => accumulator + currentValue;
+function displayTotals () {
 
-//       // Additionner les quantités totales de chaque produit du panier
-//           const realTotalQuantity = totalQuantity.reduce(total, 0);
-//           console.log(realTotalQuantity)
+  if(customerCart === null) {
+    alert("Il n'y a aucun article dans votre panier !")
+  }else {
+    for (j = 0; j < customerCart.length; j++ ){
 
-//       // Additionner les prix totaux de chaque produit du panier      
-//           const realTotalPrice = totalPrice.reduce(total, 0);
-//           console.log(realTotalPrice)
+      fetch(`http://localhost:3000/api/products/${customerCart[j].id}`)
+        .then(res => res.json ()
+        )
 
-//           document.querySelector('#totalPrice').innerHTML += `${realTotalPrice}`;
-//           document.querySelector('#totalQuantity').innerHTML += `${realTotalQuantity}`;
-// }
+        .then (data => {
+          const total = (accumulator, currentValue) => accumulator + currentValue;
 
-// displayTotals();
+      // Additionner les quantités totales de chaque produit du panier
+          const realTotalQuantity = totalQuantity.reduce(total, 0);
+          console.log(realTotalQuantity)
+
+      // Additionner les prix totaux de chaque produit du panier      
+          const realTotalPrice = totalPrice.reduce(total, 0);
+          console.log(realTotalPrice)
+
+          document.querySelector('#totalPrice').innerHTML += `${realTotalPrice}`;
+          document.querySelector('#totalQuantity').innerHTML += `${realTotalQuantity}`;
+        })
+    }
+  }
+}
+
+displayTotals();
