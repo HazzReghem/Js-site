@@ -4,7 +4,7 @@ console.log(customerCart);
 let totalPrice = [];
 let totalQuantity = [];
 
-// Fonction d'affichage des produits dans le panier
+//--------------------------FONCTION DAFFICHAGE DES PRODUITS DANS LE PANIER----------------------------
 
 function displayProductsInCart() {
     
@@ -67,6 +67,8 @@ function displayProductsInCart() {
 }
 displayProductsInCart();
 
+// --------------FONCTION DAFFICHAGE PRIX ET QUANTITE TOTAUX--------------------------------
+
 function displayTotals () {
 
   if(customerCart === null) {
@@ -95,5 +97,35 @@ function displayTotals () {
     }
   }
 }
-
 displayTotals();
+
+// -------------------------FONCTION MODIFICATION QUANTITE DARTICLE DANS LE PANIER---------------------
+
+function quantityModifier() {
+  let newQuantity = document.querySelectorAll(".itemQuantity");
+
+  for (k = 0; k < newQuantity.length; k++) {
+    const modifyQuantity = newQuantity[k];
+
+    // Ecouter bouton pour modifier la quantité
+    modifyQuantity.addEventListener("change", (event) => {
+      event.preventDefault(event);
+
+      // Si quantité n'est pas entre 1 et 100 : ERROR ! 
+      if (modifyQuantity.value < 1 || modifyQuantity.value > 100){
+        alert("Veuillez indiquer une quantité d'article(s) comprise entre 1 et 100 !")
+      // Sinon : OK !
+      }else {
+        newQuantity.innerHTML += `<input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${event.target.value}">`;
+
+        customerCart[k].quantity = Number(modifyQuantity.value);
+
+        localStorage.setItem("product", JSON.stringify(customerCart));
+        // Message d'alerte puis reload automatique de la page
+        alert("Le nombre d'article(s) a bien été mis à jour dans votre panier!");
+        window.location.reload();
+      }
+    })
+  }
+}
+quantityModifier();
