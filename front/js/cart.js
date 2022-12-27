@@ -129,3 +129,70 @@ function quantityModifier() {
   }
 }
 quantityModifier();
+
+// -----------------------FONCTION GESTION DE LA COMMANDE-------------------------
+
+// Déclaration des REGEX
+let REGEXText = /^[a-zA-Zéêëèîïâäçù ,'-]{3,20}$/;
+let REGEXAddress = /^[0-9]{1,3}[a-zA-Zéêëèîïâäçù ,'-]{3,30}$/;
+let REGEXEmail = /^(([a-zA-z0-9])+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/;
+
+// Écoute du prénom
+firstName.addEventListener("input", validFirstName) 
+    function validFirstName() {
+        if (REGEXText.test(firstName.value) == false) {
+            firstNameErrorMsg.innerHTML = "Un minimum de 3 lettres est requis, les caractères spéciaux ainsi que les chiffres ne sont pas acceptés !";
+            return false;
+        } else {
+            firstNameErrorMsg.innerHTML = "";
+            return true;
+        }
+    }
+
+// Écoute du nom
+lastName.addEventListener("input", validLastName)
+    function validLastName() {
+        if (REGEXText.test(lastName.value) == false) {
+            lastNameErrorMsg.innerHTML = "Un minimum de 3 lettres est requis, les caractères spéciaux ainsi que les chiffres ne sont pas acceptés !";
+            return false;
+        } else {
+            lastNameErrorMsg.innerHTML = "";
+            return true;
+        }
+    }
+
+// Écoute de l'addresse
+address.addEventListener("input", validAddress) 
+    function validAddress() {
+        if (REGEXAddress.test(address.value) == false) {
+            addressErrorMsg.innerHTML = "Un numéro de l'adresse doit comporter 1 à 3 chiffres, et être le nom de la rue !";
+            return false;
+        } else {
+            addressErrorMsg.innerHTML = "";
+            return true;
+        }
+    }
+
+// Écoute de la ville
+city.addEventListener("input", validCity)
+    function validCity() {
+        if (REGEXText.test(city.value) == false) {
+            cityErrorMsg.innerHTML = "Un minimum de 3 lettres est requis, les caractères spéciaux ainsi que les chiffres ne sont pas acceptés !";
+            return false;
+        } else {
+            cityErrorMsg.innerHTML = "";
+            return true;
+        }
+    }
+
+// Écoute de l'email
+email.addEventListener("input", validEmail)
+    function validEmail() {
+        if (REGEXEmail.test(email.value) == false) {
+            emailErrorMsg.innerHTML = "Veuillez renseigner une adresse e-mail valide. Exemple : prenom.nom@exemple.fr ou nomprenom@exemple.com";
+            return false;
+        } else {
+            emailErrorMsg.innerHTML = "";
+            return true;
+        }
+    }
