@@ -47,16 +47,12 @@ function displayProductsInCart() {
                 </article>`
 
               let quantityNumber = Number(quantityChoice);
-              console.log(quantityNumber)
     
               let priceNumber = Number(quantityChoice * data.price);
-              console.log(priceNumber)
 
               totalQuantity.push(quantityNumber);
-              console.log(totalQuantity)
 
               totalPrice.push(priceNumber);
-              console.log(totalPrice)
             })
             
             .catch(error => {
@@ -85,11 +81,9 @@ function displayTotals () {
 
       // Additionner les quantités totales de chaque produit du panier
           const realTotalQuantity = totalQuantity.reduce(total, 0);
-          console.log(realTotalQuantity)
 
       // Additionner les prix totaux de chaque produit du panier      
           const realTotalPrice = totalPrice.reduce(total, 0);
-          console.log(realTotalPrice)
 
           document.querySelector('#totalPrice').innerHTML += `${realTotalPrice}`;
           document.querySelector('#totalQuantity').innerHTML += `${realTotalQuantity}`;
@@ -130,7 +124,7 @@ function quantityModifier() {
 }
 quantityModifier();
 
-// -----------------------FONCTION GESTION DE LA COMMANDE-------------------------
+// -----------------------FONCTIONS DE GESTION DU FORMULAIRE-------------------------
 
 // Déclaration des REGEX
 let REGEXText = /^[a-zA-Zéêëèîïâäçù ,'-]{3,20}$/;
@@ -196,3 +190,66 @@ email.addEventListener("input", validEmail)
             return true;
         }
     }
+
+    // ----------------------FONCTION DENVOIS DE LA COMMANDE VERS LOCAL STORAGE-----------------
+
+function sendOrderToLocalStorage() {
+  let order = document.querySelector("#order");
+
+    // Écoute du bouton Commander
+    order.addEventListener("click", (event) => {
+        event.preventDefault(event);
+
+    // Constante données contact du formulaire
+    const contact = {
+        firstName : document.querySelector("#firstName").value,
+        lastName : document.querySelector("#lastName").value,
+        address : document.querySelector("#address").value,
+        city : document.querySelector("#city").value,
+        email : document.querySelector("#email").value
+    };
+
+        // Si le formulaire est correctement rempli 
+        if (customerCart !== null
+        && validFirstName(firstName) 
+        && validLastName(lastName) 
+        && validAddress(address) 
+        && validCity(city) 
+        && validEmail(email)) {
+
+    // Récuperérer les ID et les envoyer sous forme d'un tableau dans le local storage
+    const products = []
+        for (let i = 0; i < customerCart.length; i++) {
+        products.push(customerCart[i].id);
+        }
+
+            // On stocke le contact et les produits dans le local storage
+            localStorage.setItem("contact", JSON.stringify(contact));
+            localStorage.setItem("products", JSON.stringify(products));
+
+                // Et on envoie les données dans l'API avec fetch
+                fetch("http://localhost:3000/api/products/order", {
+                    method: "POST",
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({contact, products})
+                })
+                .then(response => {
+                    return response.json()
+                })
+                .then(data => {
+                    console.log(data);
+                    localStorage.setItem("orderId", data.orderId);
+                    window.location.href = `confirmation.html?orderId=${data.orderId}`;
+                })
+        // Message d'erreur
+        } else {
+            alert("Oops ! Il semblerait qu'un champ du formulaire soit incorrect. Veuillez vérifier vos coordonnées.");
+        }
+    })
+}
+
+// Appel de la fonction
+sendOrderToLocalStorage();
