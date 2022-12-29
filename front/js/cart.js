@@ -53,6 +53,54 @@ function displayProductsInCart() {
               totalQuantity.push(quantityNumber);
 
               totalPrice.push(priceNumber);
+
+              // -------------------------FONCTION MODIFICATION QUANTITE DARTICLE DANS LE PANIER---------------------
+
+              function quantityModifier() {
+
+                let newQuantity = document.querySelectorAll(".itemQuantity");
+              
+                console.log(newQuantity)
+              
+                for (let k = 0; k < newQuantity.length; k++) {
+              
+                  console.log(k)
+              
+                  // Ecouter bouton pour modifier la quantité
+              
+                  newQuantity[k].addEventListener("change", (event) => {
+              
+                    // Si quantité n'est pas entre 1 et 100 : ERROR !
+              
+                    if (newQuantity[k].value < 1 || newQuantity[k].value > 100) {
+              
+                      alert("Veuillez indiquer une quantité d'article(s) comprise entre 1 et 100 !")
+              
+                      // Sinon : OK !
+              
+                    } else {
+                      
+                      // On récupère la valeur numerique de l'écoute de l'input    
+                      let modifiedQuantity = parseInt(newQuantity[k].value, 10);
+              
+                      // Affectation de cette valeur à la valeur du LS
+                      customerCart[k].quantity = modifiedQuantity;
+              
+                      // Actualisation du LS         
+                      localStorage.setItem("product", JSON.stringify(customerCart));
+              
+                      // Message d'alerte puis reload automatique de la page
+                      alert("Le nombre d'article(s) a bien été mis à jour dans votre panier!");
+                      window.location.reload();
+              
+                    }
+              
+                  })
+              
+                }
+              
+              }
+              quantityModifier();
             })
             
             .catch(error => {
@@ -62,6 +110,7 @@ function displayProductsInCart() {
     }
 }
 displayProductsInCart();
+
 
 // --------------FONCTION DAFFICHAGE PRIX ET QUANTITE TOTAUX--------------------------------
 
@@ -92,37 +141,6 @@ function displayTotals () {
   }
 }
 displayTotals();
-
-// -------------------------FONCTION MODIFICATION QUANTITE DARTICLE DANS LE PANIER---------------------
-
-function quantityModifier() {
-  let newQuantity = document.querySelectorAll(".itemQuantity");
-
-  for (k = 0; k < newQuantity.length; k++) {
-    const modifyQuantity = newQuantity[k];
-
-    // Ecouter bouton pour modifier la quantité
-    modifyQuantity.addEventListener("change", (event) => {
-      event.preventDefault(event);
-
-      // Si quantité n'est pas entre 1 et 100 : ERROR ! 
-      if (modifyQuantity.value < 1 || modifyQuantity.value > 100){
-        alert("Veuillez indiquer une quantité d'article(s) comprise entre 1 et 100 !")
-      // Sinon : OK !
-      }else {
-        newQuantity.innerHTML += `<input type="number" class="itemQuantity" name="itemQuantity" min="1" max="100" value="${event.target.value}">`;
-
-        customerCart[k].quantity = Number(modifyQuantity.value);
-
-        localStorage.setItem("product", JSON.stringify(customerCart));
-        // Message d'alerte puis reload automatique de la page
-        alert("Le nombre d'article(s) a bien été mis à jour dans votre panier!");
-        window.location.reload();
-      }
-    })
-  }
-}
-quantityModifier();
 
 // -----------------------FONCTIONS DE GESTION DU FORMULAIRE-------------------------
 
