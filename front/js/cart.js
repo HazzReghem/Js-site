@@ -101,6 +101,35 @@ function displayProductsInCart() {
               
               }
               quantityModifier();
+              
+              // -------------------FONCTION SUPPRIMER ARTICLE DU PANIER--------------------
+              function deleteItems() {
+
+                let deleteItem = document.querySelectorAll(".deleteItem");
+
+              // Pour chacun des articles du panier on active l'écoute du bouton supprimer
+                for (let i = 0; i < deleteItem.length; i++) {
+                    deleteItem[i].addEventListener("click", (event) => {
+                        event.preventDefault(event);
+                        
+              // Variables pour cibler le produit à supprimer
+                        let itemId = customerCart[i].id;
+                        let itemColor = customerCart[i].color;
+                        
+              // Filtrer le panier pour ne garder que les produits non sélectionnés
+                customerCart = customerCart.filter(customerCart => customerCart.id !== itemId || customerCart.color !== itemColor);
+
+              // Envoi des données au local storage
+                    localStorage.setItem("product", JSON.stringify(customerCart))
+
+              // Message d'alerte puis reload automatique de la page
+                        alert("Cet article a bien été supprimé de votre panier !");
+                        window.location.reload();
+                    })
+                }
+              }
+
+              deleteItems();
             })
             
             .catch(error => {
