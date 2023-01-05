@@ -14,7 +14,6 @@ const queryString_url_id = document.location.search;
 // Extraire ID produit
 const urlSeachParams = new URLSearchParams(queryString_url_id);
 const productId = urlSeachParams.get("id");
-console.log(productId);
 
 //--------------FONCTION DAFFICHAGE DU PRODUIT--------------------
 function displaySelectedProduct(){
@@ -116,7 +115,4 @@ function addProductToLocalStorage(){
 
 // Appel de la fonction
 addProductToLocalStorage();
-
-// customerCart.forEach((element, key) => {
-    // (element.id === customerSelection.id && element.color == customerSelection.color)}
 

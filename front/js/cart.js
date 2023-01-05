@@ -1,5 +1,4 @@
 let customerCart = JSON.parse(localStorage.getItem("product"));
-console.log(customerCart);
 
 let totalPrice = [];
 let totalQuantity = [];
@@ -32,7 +31,7 @@ function displayProductsInCart() {
                     <div class="cart__item__content__description">
                       <h2>${data.name}</h2>
                       <p>${colorChoice}</p>
-                      <p>${quantityChoice * data.price}€</p>
+                      <p>${data.price}€</p>
                     </div>
                     <div class="cart__item__content__settings">
                       <div class="cart__item__content__settings__quantity">
@@ -60,11 +59,7 @@ function displayProductsInCart() {
 
                 let newQuantity = document.querySelectorAll(".itemQuantity");
               
-                console.log(newQuantity)
-              
                 for (let k = 0; k < newQuantity.length; k++) {
-              
-                  console.log(k)
               
                   // Ecouter bouton pour modifier la quantité
               
@@ -103,6 +98,7 @@ function displayProductsInCart() {
               quantityModifier();
               
               // -------------------FONCTION SUPPRIMER ARTICLE DU PANIER--------------------
+              
               function deleteItems() {
 
                 let deleteItem = document.querySelectorAll(".deleteItem");
@@ -163,8 +159,8 @@ function displayTotals () {
       // Additionner les prix totaux de chaque produit du panier      
           const realTotalPrice = totalPrice.reduce(total, 0);
 
-          document.querySelector('#totalPrice').innerHTML += `${realTotalPrice}`;
-          document.querySelector('#totalQuantity').innerHTML += `${realTotalQuantity}`;
+          document.querySelector('#totalPrice').textContent += `${realTotalPrice}`;
+          document.querySelector('#totalQuantity').textContent += `${realTotalQuantity}`;
         })
     }
   }
@@ -182,10 +178,10 @@ let REGEXEmail = /^(([a-zA-z0-9])+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.(
 firstName.addEventListener("input", validFirstName) 
     function validFirstName() {
         if (REGEXText.test(firstName.value) == false) {
-            firstNameErrorMsg.innerHTML = "Un minimum de 3 lettres est requis, les caractères spéciaux ainsi que les chiffres ne sont pas acceptés !";
+            firstNameErrorMsg.textContent = "Un minimum de 3 lettres est requis, les caractères spéciaux ainsi que les chiffres ne sont pas acceptés !";
             return false;
         } else {
-            firstNameErrorMsg.innerHTML = "";
+            firstNameErrorMsg.textContent = "";
             return true;
         }
     }
@@ -194,10 +190,10 @@ firstName.addEventListener("input", validFirstName)
 lastName.addEventListener("input", validLastName)
     function validLastName() {
         if (REGEXText.test(lastName.value) == false) {
-            lastNameErrorMsg.innerHTML = "Un minimum de 3 lettres est requis, les caractères spéciaux ainsi que les chiffres ne sont pas acceptés !";
+            lastNameErrorMsg.textContent = "Un minimum de 3 lettres est requis, les caractères spéciaux ainsi que les chiffres ne sont pas acceptés !";
             return false;
         } else {
-            lastNameErrorMsg.innerHTML = "";
+            lastNameErrorMsg.textContent = "";
             return true;
         }
     }
@@ -206,10 +202,10 @@ lastName.addEventListener("input", validLastName)
 address.addEventListener("input", validAddress) 
     function validAddress() {
         if (REGEXAddress.test(address.value) == false) {
-            addressErrorMsg.innerHTML = "Un numéro de l'adresse doit comporter 1 à 3 chiffres, et être le nom de la rue !";
+            addressErrorMsg.textContent = "Un numéro de l'adresse doit comporter 1 à 3 chiffres, et être le nom de la rue !";
             return false;
         } else {
-            addressErrorMsg.innerHTML = "";
+            addressErrorMsg.textContent = "";
             return true;
         }
     }
@@ -218,10 +214,10 @@ address.addEventListener("input", validAddress)
 city.addEventListener("input", validCity)
     function validCity() {
         if (REGEXText.test(city.value) == false) {
-            cityErrorMsg.innerHTML = "Un minimum de 3 lettres est requis, les caractères spéciaux ainsi que les chiffres ne sont pas acceptés !";
+            cityErrorMsg.textContent = "Un minimum de 3 lettres est requis, les caractères spéciaux ainsi que les chiffres ne sont pas acceptés !";
             return false;
         } else {
-            cityErrorMsg.innerHTML = "";
+            cityErrorMsg.textContent = "";
             return true;
         }
     }
@@ -230,10 +226,10 @@ city.addEventListener("input", validCity)
 email.addEventListener("input", validEmail)
     function validEmail() {
         if (REGEXEmail.test(email.value) == false) {
-            emailErrorMsg.innerHTML = "Veuillez renseigner une adresse e-mail valide. Exemple : prenom.nom@exemple.fr ou nomprenom@exemple.com";
+            emailErrorMsg.textContent = "Veuillez renseigner une adresse e-mail valide. Exemple : prenom.nom@exemple.fr ou nomprenom@exemple.com";
             return false;
         } else {
-            emailErrorMsg.innerHTML = "";
+            emailErrorMsg.textContent = "";
             return true;
         }
     }
@@ -287,7 +283,6 @@ function sendOrderToLocalStorage() {
                     return response.json()
                 })
                 .then(data => {
-                    console.log(data);
                     localStorage.setItem("orderId", data.orderId);
                     window.location.href = `confirmation.html?orderId=${data.orderId}`;
                 })
