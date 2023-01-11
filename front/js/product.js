@@ -105,10 +105,12 @@ function addProductToLocalStorage(){
                 }else {
                     let newProductQuantityInCart = parseInt(customerSelection.quantity) + parseInt(alreadyInCart.quantity);
                     alreadyInCart.quantity = newProductQuantityInCart;
-                    localStorage.setItem("product", JSON.stringify(customerCart));
+                    // localStorage.setItem("product", JSON.stringify(customerCart));
                     if (alreadyInCart.quantity > 100) {
                         alert("Votre quantité d'article dépasse la limite autorisée de 100 articles. Veuillez ajuster la quantité entre 1 et 100 articles directement dans votre panier !");
                     }
+                    else if (alreadyInCart.quantity <= 100)
+                    localStorage.setItem("product", JSON.stringify(customerCart));
                 }
             }
         }
